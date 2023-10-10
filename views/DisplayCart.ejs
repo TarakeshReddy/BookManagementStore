@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart</title>
+  <style>
+
+    /* Body style */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Page container style */
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Heading style */
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* List style for cart items */
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    /* Cart item style */
+    li {
+      margin-bottom: 20px;
+    }
+
+    /* Image style */
+    img {
+      height: 100px;
+      width: 200px;
+      margin-bottom: 10px;
+    }
+
+    /* Price and quantity style */
+    p {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #444;
+    }
+
+    /* Form style */
+    form {
+      margin-top: 10px;
+    }
+
+    /* Label style */
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    /* Quantity input style */
+    input[type="number"] {
+      width: 60px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Update button style */
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* Remove button style */
+    a button {
+      background-color: #d9534f;
+      color: #fff;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    a button:hover {
+      background-color: #c9302c;
+    }
+
+    /* Total Price style */
+    p.total-price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <%- include('layout') %>
+    <h1>Shopping Cart</h1>
+    <ul>
+      <% shoppingCart.forEach(function(cartItem) { %>
+        <li>
+          <h3><%= cartItem.title %></h3>
+          <img src="<%= cartItem.image %>" alt="<%= cartItem.title %>">
+          <p>Price: <%= cartItem.price %> .Rs</p>
+          <p>Quantity: <%= cartItem.quantity %></p>
+          <form>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" value="<%= cartItem.quantity %>" default="1">
+            <input type="hidden" id="id" value="<%= cartItem.bookId %>">
+            <button type="submit" onclick="update()">Update</button>
+          </form>
+          <a href='/cart/<%= cartItem.bookId%>'><button>Remove</button></a>
+        </li>
+      <% }); %>
+    </ul>
+    <p class="total-price">Total Price: <%= totalPrice %>.Rs</p>
+  </div>
+  <script>
+    async function update() {
+      const quantity = document.getElementById('quantity').value; 
+      const bookId = document.getElementById('id').value; 
+      const obj = { 'quantity': quantity, 'bookId': bookId };
+
+      try {
+        const res = await fetch(`http://localhost:4000/cart/update/${bookId}`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(obj)
+        });
+
+        if (res.ok) {
+          console.log("Success");
+        } else {
+          console.log(`Failed ${res.status}`);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Profile page</title>
+  <style>
+
+    /* Body style */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Page container style */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Heading style */
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Paragraph style */
+    p {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    /* Buttons container style */
+    .buttons {
+      margin-top: 20px;
+    }
+
+    /* Button style */
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Logout button style */
+    form {
+      display: inline;
+    }
+
+    /* Optional: Style for the header and any other layout elements */
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    /* Optional: Style for the navigation menu */
+    .nav-menu {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Optional: Style for the footer */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <%- include('layout_admin') %>
+  <h1>Admin Profile Page</h1>
+  <p>Name: <%=user_details.username%></p>
+  <p>Email: <%=user_details.email%></p>
+  <div class="buttons">
+    <a href="/get-AllBooks"><button>All books</button></a>
+    <a href="/get-add-book"><button>Add Book</button></a>
+    <a href="/login"><button>Logout</button></a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review</title>
+    <style>
+
+        /* Body style */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Page container style */
+        div {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading style */
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Book title style */
+        h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Book image style */
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Form style */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Label style */
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Select and textarea style */
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Submit button style */
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <%- include('layout') %>
+        <h2>Add a Review</h2>
+        <h4><%=book.title%></h4>
+        <img src="<%=book.image%>">
+        <form id="review">
+            <label for="rating">Rating:</label>
+            <select id="rating" name="rating" required>
+                <option value="5">5 stars</option>
+                <option value="4">4 stars</option>
+                <option value="3">3 stars</option>
+                <option value="2">2 stars</option>
+                <option value="1">1 star</option>
+            </select>
+
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4" cols="50" required></textarea>
+
+            <button type="submit">Submit Review</button>
+        </form>
+        <script>
+            const review = document.getElementById("review")
+            review.addEventListener("submit", async(event) =>
+            {
+                event.preventDefault()
+
+                const rating = document.getElementById("rating").value
+                const comment = document.getElementById("comment").value
+                const obj = {'rating':rating, 'comment':comment}
+                try{
+                    const res = await fetch("http://localhost:4000/books/<%= book._id %>/reviews" ,{
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(obj)
+                    })
+                    if(res.ok){
+                        window.location.href = '/books/<%= bookId %>'
+                    }
+                    else{
+                        console.log(`Failed to review${res.status}`)
+                    }
+                }
+                catch(err){
+                    console.log('Error: ',err)
+                }
+            })
+
+        </script>
+    </div>
+</body>
+</html>
