@@ -26,6 +26,7 @@
       font-size: 24px;
       margin-bottom: 20px;
       color: #333;
+      text-align: center;
     }
 
     /* List style for cart items */
@@ -35,15 +36,22 @@
     }
 
     /* Cart item style */
-    li {
+    .cart_item {
+      max-width: 37%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: whitesmoke;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
       margin-bottom: 20px;
     }
 
     /* Image style */
     img {
-      height: 100px;
-      width: 200px;
+      height: 150px;
+      width: 150px;
       margin-bottom: 10px;
+      border: 2px solid black;
     }
 
     /* Price and quantity style */
@@ -109,6 +117,7 @@
       font-weight: bold;
       margin-top: 20px;
       color: #333;
+      text-align: center;
     }
   </style>
 </head>
@@ -118,7 +127,7 @@
     <h1>Shopping Cart</h1>
     <ul>
       <% shoppingCart.forEach(function(cartItem) { %>
-        <li>
+        <li class="cart_item">
           <h3><%= cartItem.title %></h3>
           <img src="<%= cartItem.image %>" alt="<%= cartItem.title %>">
           <p>Price: <%= cartItem.price %> .Rs</p>

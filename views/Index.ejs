@@ -27,29 +27,38 @@
 
         /* Heading style */
         h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 5px;
             color: #333;
+            margin-left: 43%;
         }
 
         /* List style for books */
-        ul {
+        .book_aline{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
             list-style-type: none;
             padding: 0;
+            justify-content: space-evenly;
         }
 
         /* Book item style */
         li {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            /* border: 1px solid black; */
         }
 
         /* Image style */
         img {
             height: 150px;
             width: 200px;
-            margin-right: 20px;
+            padding: 20px 40px 20px 40px;
+            /* justify-content: space-evenly; */
+            margin: auto 10px;
         }
 
         /* Book title style */
@@ -61,29 +70,34 @@
         /* Search form style */
         form {
             display: flex;
+            flex-direction: row;
             align-items: center;
             margin-bottom: 20px; /* Add margin to move the search down */
         }
 
         /* Search input style */
         input[type="search"] {
-            width: 300px;
+            width: 85vw;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 2px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
-            margin-right: 20px; 
+            margin-right: 20px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
         /* Search button style */
         button[type="submit"] {
             background-color: #007bff;
             color: #fff;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            right: 20%;
         }
 
         button[type="submit"]:hover {
@@ -92,30 +106,34 @@
     </style>
 </head>
 <body>
-    <% if (user.isAdmin) { %>
+    <% if (admin) { %>
         <%- include('layout_admin') %>
     <% } else { %>
         <%- include('layout') %>
     <% } %>    
     <div class="container">
         <form>
-          <label for="searchQuery"></label>
-          <input type="search" id="searchQuery" name="query" placeholder="Search books...">
-          <button type="submit" onclick="search(event)">Search</button>
-      </form>
+            <label for="searchQuery"></label>
+            <input type="search" id="searchQuery" name="query" placeholder="Search books...">
+            <button type="submit" onclick="search(event)">Search</button>
+        </form>
         <h1>Book List</h1>
-        <ul>
-            <% books.forEach(function(book) { %>
-                <li>
-                    <img src="<%= book.image %>" alt="<%= book.title %>" height="150px" width="200px">
-                    <a href="/books/<%= book._id %>"><strong><%= book.title %></strong></a>
-                </li>
-            <% }); %>
+        <ul class="book_aline">
+            <% if (books) { %>
+                <% books.forEach(function(book) { %>
+                    <li>
+                        <img src="<%= book.image %>" alt="<%= book.title %>" height="150px" width="200px">
+                        <a href="/books/<%= book._id %>"><strong><%= book.title %></strong></a>
+                    </li>
+                <% }); %>
+            <% } else { %>
+                <p>No books found</p>
+            <% } %>
         </ul>
     </div>
     <script>
         async function search(event) {
-    event.preventDefault();
+        event.preventDefault();
     const searchQuery = document.getElementById("searchQuery").value;
     try {
         const res = await fetch(`http://localhost:4000/search?query=${encodeURIComponent(searchQuery)}`, {
@@ -124,12 +142,8 @@
                 'Content-Type': 'application/json'
             }
         });
-
-        if (res.ok) {
-            window.location.href="/index"
-        } else {
-            console.error(`Error: ${res.status} - ${res.statusText}`);
-        }
+        window.location.href="/index1"
+        console.log(res)
     } catch (err) {
         console.error(err);
     }
