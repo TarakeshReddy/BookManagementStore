@@ -6,6 +6,7 @@ const routes = require('./routes/routes')
 const port = 4000
 app = express()
 app.use(express.json())
+app.use('/images',express.static('./images'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(

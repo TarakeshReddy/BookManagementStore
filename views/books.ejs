@@ -10,35 +10,49 @@
       background-color: #f2f2f2;
       margin: 0;
       padding: 0;
+      background-image: url("/images/book1.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
     }
 
     /* Page container style */
     .container {
-      max-width: 100%;
+      max-width: 40%;
       margin: 0 auto;
       padding: 20px;
+      /* border: 1px solid black; */
+      border-radius: 12px;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* align-items: center; */
+      margin-top: 20px;
+      opacity: 0.9;
     }
 
     /* Heading style */
     h1 {
       font-size: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       color: #333;
+      text-align: center;
     }
 
     /* Image style */
     img {
       height: 200px;
       width: 200px;
-      margin-bottom: 20px;
+      margin-left: 30%;
+      margin-bottom: 10px;
     }
 
     /* Paragraph style */
     p {
       font-size: 16px;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       color: #444;
     }
 
@@ -51,6 +65,7 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 16px;
+      margin: 10px auto;
       margin-right: 10px;
     }
 
@@ -87,7 +102,7 @@
     <p>Author: <%= book.author %></p>
     <p>ISBN: <%= book.ISBN %></p>
     <p>Price: <%= book.price %>.Rs</p>
-    <% if(user.isAdmin) { %>
+    <% if(admin) { %>
       <p>Quantity: <%= book.quantity %></p>
       <a href="/deleteBook/<%=book._id%>"><button>Delete</button></a>
       <a href="/update"><button>Update Book</button></a>
@@ -96,6 +111,7 @@
     <% if (book.reviews.length === 0) { %>
       <p>No reviews available for this book.</p>
     <% } else { %>
+      <p><%= book.reviews.rating %></p>
       <ul>
         <% book.reviews.forEach(function(review) { %>
           <li>Rating: <%= review.rating %> stars</li>
@@ -104,9 +120,11 @@
         <% }); %>
       </ul>
     <% } %>
-    <% if(!user.isAdmin) { %>
-      <a href="/review"><button>Review Book</button></a>
-      <a href="/addcart"><button>Add to Cart</button></a>
+    <% if(!admin) { %>
+      <div class="review_cart">
+        <a href="/review"><button>Review Book</button></a>
+        <a href="/addcart"><button>Add to Cart</button></a>
+      </div>
     <%}%>
   </div>
 </body>

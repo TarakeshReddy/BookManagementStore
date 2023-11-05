@@ -9,30 +9,34 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box;;
         }
 
         /* Body style */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background: url('/images/pic5.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover
         }
 
         /* Form container style */
         form {
             width: 30%;
             padding: 20px;
-            background-color: #fff;
+            background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
         }
 
         /* Heading style */
         h1 {
-            font-size: 24px;
+            font-size: 32px;
             margin-bottom: 20px;
             color: #333;
             text-align: center;
@@ -41,9 +45,10 @@
         /* Label style */
         label {
             font-weight: bold;
+            font-size: 18px;
             margin-bottom: 10px;
             display: block;
-            color: #333;
+            color: #453838;
         }
 
         /* Input style */
@@ -67,6 +72,7 @@
             cursor: pointer;
             font-size: 16px;
             width: 100%;
+            margin-bottom: 10px;
         }
 
         button.login-button:hover {
